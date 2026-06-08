@@ -20,7 +20,7 @@ TERM_CATEGORIES = ("common", "selected", "excluded")
 CATEGORY_LABELS = {
     "common": "Vanlig begrep",
     "selected": "Utvalgt begrep",
-    "excluded": "Ekskludert begrep",
+    "excluded": "Sjeldent begrep",
 }
 
 TERM_ALLOWED_PATTERN = re.compile(r"^[0-9A-Za-zÆØÅæøå-]+$")
@@ -36,10 +36,13 @@ APP_CSS = """
     font-size: 1.55rem;
 }
 .app-header p {
-    margin: 0.2rem 0;
+    margin: 0.35rem 0 0;
     color: #4b5563;
     font-size: 0.92rem;
     line-height: 1.35;
+}
+.app-header p + p {
+    margin-top: 0.8rem;
 }
 #audio-preview {
     min-height: 92px !important;
@@ -564,7 +567,7 @@ def sample_info_html(row: sqlite3.Row, dataset_dir: str) -> str:
         "<div class=\"legend\">"
         "<span class=\"legend-item\"><span class=\"legend-swatch term-common\"></span>common</span>"
         "<span class=\"legend-item\"><span class=\"legend-swatch term-selected\"></span>selected</span>"
-        "<span class=\"legend-item\"><span class=\"legend-swatch term-excluded\"></span>excluded</span>"
+        "<span class=\"legend-item\"><span class=\"legend-swatch term-excluded\"></span>rare</span>"
         "</div>"
         "</div>"
     )
@@ -626,8 +629,10 @@ def header_html() -> str:
       </p>
       <p>
         Det fulle datasettet består av rundt 1600 timer lyd fordelt på om lag 200 000 lydklipp
-        og omfatter 22 000 ulike medisinske norske begreper. Omtrent 10 000 utvalgte begreper
-        er balansert for hyppig forekomst, med mål om minst 100 forekomster totalt.
+        og omfatter 22 000 ulike medisinske norske begreper. Omtrent 10 000 utvalgte begreper fra SNOMED CT
+        er balansert for hyppig forekomst i datasettet, med mål om minst 100 forekomster totalt.
+        De utvalgte begrepene er markert med gult (selected).
+        Begreper markert med grønt og rødt er inkludert i SNOMED, men ikke spesielt fremhevet i datasettet.
       </p>
       <p><strong>Søk på fagtermer og forhåndsvis tilknyttede lydklipp.</strong></p>
     </div>
